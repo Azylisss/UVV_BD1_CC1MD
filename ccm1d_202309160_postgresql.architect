@@ -219,7 +219,7 @@
    </folder>
   </table>
   <table id="TAB61" populated="true" UUID="be8661a8-2946-4a48-9924-80988fd23b1a" name="envios" objectType="TABLE" physicalName="envios" >
-   <remarks>É a tabela que representa os produtos enviados.</remarks>
+   <remarks>tabela que representa os produtos enviados.</remarks>
    <folder id="FOLTAB611" populated="true" name="Columns" physicalName="Columns" type="1">
     <column id="COL62" populated="true" UUID="7327e9e7-0d23-4efc-9c08-97777282315b" autoIncrement="false" autoIncrementSequenceName="envios_envio_id_seq" defaultValue="" name="envio_id" nullable="0" physicalName="envio_id" precision="38" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
      <remarks>A chave primaria da tabela envios que representa o id dos envios.</remarks>
@@ -228,13 +228,13 @@
      <remarks>Chave primaria da tabela loja, representando o id das lojas.</remarks>
     </column>
     <column id="COL64" populated="true" UUID="c586fa20-b0ba-4654-9c0e-7539572e71b8" autoIncrement="false" autoIncrementSequenceName="clientes_client_id_seq" defaultValue="" name="client_id" nullable="0" physicalName="client_id" precision="38" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2" userDefinedTypeUUID="115245ce-612c-4d6a-b559-6dd903dd959a" >
-     <remarks>Chave principal da tabela cliente que representa o id dos clientes.</remarks>
+     <remarks>primary key  da tabela cliente  representa o id dos clientes.</remarks>
     </column>
     <column id="COL65" populated="true" UUID="c326c049-bf7b-4f45-909f-b16a658d0f20" autoIncrement="false" autoIncrementSequenceName="envios_endereco_entrega_seq" defaultValue="" name="endereco_entrega" nullable="0" physicalName="endereco_entrega" precision="512" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
-     <remarks>Atributo que representa o endereço que o produto deve ser entregue.</remarks>
+     <remarks>  representa o endereço que o produto deve ser entregue.</remarks>
     </column>
     <column id="COL66" populated="true" UUID="7c2cd678-fd65-4eb5-bb46-1b75487b4b78" autoIncrement="false" autoIncrementSequenceName="envios_status_seq" defaultValue="" name="status" nullable="0" physicalName="status" precision="15" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
-     <remarks>Representa o status do produto ate o endereço do cliente.</remarks>
+     <remarks>representa o status.</remarks>
     </column>
     </folder>
     <folder id="FOLTAB613" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">

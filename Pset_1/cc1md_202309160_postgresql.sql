@@ -29,14 +29,6 @@ CREATE DATABASE uvv
        LC_COLLATE = 'pt_BR.UTF-8'
        LC_CTYPE = 'pt_BR.UTF-8'   
 
--- Conectando ao meu usuario -- 	
-
-SET role sandro;
-
---conectando ao banco de dados--
-
-CONNECT uvv ;
-
 -- Deletando o esquema (SCHEMA) caso ele já exista --
 
 DROP SCHEMA IF EXISTS lojas

@@ -9,7 +9,7 @@ DROP DATABASE IF EXISTS uvv
 
 -- Deletando meu Usuario caso exista --
 
-DROP USER IF EXISTS Sandro
+DROP USER IF EXISTS sandro
 ;
 
 -- Criando o usuário com o meu nome conforme solicitado --

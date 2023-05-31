@@ -15,8 +15,6 @@ DROP USER IF EXISTS Sandro
 -- Criando o usuário com o meu nome conforme solicitado --
 
 CREATE USER sandro
-	 CREATE USER ricardo
-   CREATEROLE
    CREATEDB
    LOGIN
 
@@ -29,13 +27,15 @@ CREATE DATABASE uvv
        TEMPLATE = template0
        ENCODING = UTF8
        LC_COLLATE = 'pt_BR.UTF-8'
-       LC_CTYPE = 'pt_BR.UTF-8'
-       ALLOW_CONNECTIONS = TRUE
+       LC_CTYPE = 'pt_BR.UTF-8'   
 
 -- Conectando ao meu usuario -- 	
 
 SET role sandro;
 
+--conectando ao banco de dados--
+
+CONNECT uvv ;
 
 -- Deletando o esquema (SCHEMA) caso ele já exista --
 
@@ -50,13 +50,12 @@ AUTHORIZATION sandro
 
 -- Alterando o SEARCH_PATH  para criacao das tabelas --
 
-SET SEARCH_PATH TO lojas, "$user", public;
+SET SEARCH_PATH TO lojas, public;
 
 -- Alterando o SEARCH_PATH  do Postgres para o usuario sandro assim incluindo o esquema lojas na frente em prioridade de "public" e "user" --
 
 ALTER USER sandro
-SET SEARCH_PATH TO lojas, "$user", public
-;
+SET SEARCH_PATH TO lojas, public;
 
 -- Criando a tabela "lojas" --
 
@@ -139,17 +138,18 @@ CHECK (logo_ultima_atualizacao <= current_timestamp)
 -- Criando a tabela produtos --
 
 CREATE TABLE produtos (
-                produto_id       NUMERIC(38)	NOT NULL,
-                nome 		 VARCHAR(255) 	NOT NULL,
-                preco_unitario 	 NUMERIC(10,2)		,
-                detalhes         BYTEA			,
-                imagem 		 BYTEA			,
-                imagem_mime_type VARCHAR(512)		,
-                imagem_arquivo 	 VARCHAR(512)		,
-                imagem_charset 	 VARCHAR(512)		,
-                imagem_ultima_atualizacao DATE,
-                CONSTRAINT produto_pk PRIMARY KEY (produto_id)
+    produto_id       NUMERIC(38)	NOT NULL,
+    nome             VARCHAR(255) 	NOT NULL,
+    preco_unitario   NUMERIC(10,2)		,
+    detalhes         BYTEA			,
+    imagem           BYTEA			,
+    imagem_mime_type VARCHAR(512)		,
+    imagem_arquivo   VARCHAR(512)		,
+    imagem_charset   VARCHAR(512)		,
+    imagem_ultima_atualizacao DATE,
+    CONSTRAINT produto_pk PRIMARY KEY (produto_id)
 );
+
 
 --Faz os comentários das colunas da tabela Produtos--   
 COMMENT ON TABLE lojas.produtos                            IS 'Tabela referente aos produtos das lojas cadastradas';
@@ -182,6 +182,7 @@ CREATE TABLE lojas.estoques (
     quantidade            NUMERIC(38) NOT NULL,
     CONSTRAINT   fk_estoques_lojas      FOREIGN KEY (loja_id)      REFERENCES lojas.lojas (loja_id),
     CONSTRAINT   fk_estoques_produtos   FOREIGN KEY (produto_id)   REFERENCES lojas.produtos (produto_id)
+);
 
 -- Comentando sobre os atributos e a tabela "estoque". --
 
@@ -202,13 +203,13 @@ CHECK (quantidade >= 0)
 -- Criando a tabela "clientes" --
 
 CREATE TABLE clientes (
-                client_id NUMERIC(38) 	NOT NULL,
-                email     VARCHAR(255) 	NOT NULL,
-                nome      VARCHAR(255) 	NOT NULL,
-                telefone1 VARCHAR(20)		,
-                telefone2 VARCHAR(20)		,	
-                telefone3 VARCHAR(20)		,
-                CONSTRAINT clientes_pk PRIMARY KEY (client_id)
+    client_id NUMERIC(38) 	NOT NULL,
+    email     VARCHAR(255) 	NOT NULL,
+    nome      VARCHAR(255) 	NOT NULL,
+    telefone1 VARCHAR(20)		,
+    telefone2 VARCHAR(20)		,	
+    telefone3 VARCHAR(20)		,
+    CONSTRAINT clientes_pk PRIMARY KEY (client_id)
 );
 
 -- Comentando nos atributos e na tabela "clientes" --
@@ -246,8 +247,7 @@ CREATE TABLE envios (
                 client_id 		NUMERIC(38)  NOT NULL,
                 endereco_entrega 	VARCHAR(512) NOT NULL,
                 status 			VARCHAR(15)  NOT NULL,
-                CONSTRAINT envios_pk PRIMARY KEY (envio_id)
-);
+                CONSTRAINT envios_pk PRIMARY KEY (envio_id));
 
 --Faz os comentários das colunas da tabela Envios--
 COMMENT ON COLUMN lojas.envios.envio_id            IS 'ID de envio do pedido';
@@ -263,13 +263,14 @@ COMMENT ON COLUMN lojas.envios.status              IS 'Status do envio do pedido
 -- Criando a tabela "pedidos" --
 
 CREATE TABLE pedidos (
-                pedido_id 	NUMERIC(38) NOT NULL,
-                data_hora 	TIMESTAMP   NOT NULL,
-                client_id 	NUMERIC(38) NOT NULL,
-                status 		VARCHAR(15) NOT NULL,
-                loja_id 	NUMERIC(38) NOT NULL,
-                CONSTRAINT pedidos_pk PRIMARY KEY (pedido_id)
+    pedido_id 	NUMERIC(38) NOT NULL,
+    data_hora 	TIMESTAMP   NOT NULL,
+    client_id 	NUMERIC(38) NOT NULL,
+    status 		VARCHAR(15) NOT NULL,
+    loja_id 	NUMERIC(38) NOT NULL,
+    CONSTRAINT pedidos_pk PRIMARY KEY (pedido_id)
 );
+
 
 -- Comentando nos atributos e na tabela "pedidos" --
 
@@ -309,14 +310,16 @@ CHECK (data_hora >= current_timestamp)
 -- Criando a tabela "pedido_itens". --
 
 CREATE TABLE pedido_itens (
-                produto_id 	NUMERIC(38) 	NOT NULL,
-                pedido_id 	NUMERIC(38) 	NOT NULL,
-                numero_da_linha NUMERIC(38) 	NOT NULL,
-                preco_unitario 	NUMERIC(10,2) 	NOT NULL,
-                quantidade 	NUMERIC(38) 	NOT NULL,
-                envio_id 	NUMERIC(38)		,
-                CONSTRAINT pedido_itens_pk PRIMARY KEY (produto_id, pedido_id)
+    produto_id NUMERIC(38) NOT NULL,
+    pedido_id NUMERIC(38) NOT NULL,
+    numero_da_linha NUMERIC(38) NOT NULL,
+    preco_unitario NUMERIC(10,2) NOT NULL,
+    quantidade NUMERIC(38) NOT NULL,
+    envio_id NUMERIC(38),
+    CONSTRAINT pedido_itens_pk PRIMARY KEY (produto_id, pedido_id)
 );
+
+
 
 --Faz os comentários das colunas da tabela Pedidos_Itens--
 COMMENT ON COLUMN lojas.pedidos_itens.produto_id        IS 'ID do produto associado ao item do pedidos';
